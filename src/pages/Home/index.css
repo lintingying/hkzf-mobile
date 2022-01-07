@@ -1,0 +1,10 @@
+.home {
+    padding-bottom: 50px;
+}
+
+.home .adm-tab-bar {
+    background-color: #fff;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}

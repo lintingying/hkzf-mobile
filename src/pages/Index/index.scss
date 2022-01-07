@@ -1,0 +1,98 @@
+.swiper {
+  position: relative;
+  .content {
+    // height: 212px;
+  }
+  .search {
+    width: 100%;
+    padding: 0 24px;
+    position: absolute;
+    top: 24px;
+    display: flex;
+    justify-content: space-between;
+    a {
+      text-decoration: none; 
+    }
+    .city {
+      display: inline-block;
+      width: 60px;
+      height: 30px;
+      line-height: 30px;
+      color: #333;
+      background-color: #ffffff;
+      text-align: center;
+    }
+    .adm-search-bar {
+      flex: 1;
+    }
+    .map {
+      display: inline-block;
+      padding-left: 12px;
+      height: 30px;
+      line-height: 30px;
+      text-align: center;
+      font-size: 1.2rem;
+    }
+  }
+} 
+
+.nav {
+  background-color: #ffffff;
+  padding: 10px 0;
+  img {
+    width: 48px;
+  }
+  .adm-grid-item {
+    text-align: center;
+  }
+}
+
+.group {
+  h2 {
+    padding: 8px;
+    position: relative;
+    span {
+      position: absolute;
+      right: 8px;
+    }
+  }
+  .adm-grid {
+    padding: 0 8px;
+    .adm-grid-item {
+      .group-item {
+        background-color: #ffffff;
+        padding: 8px;
+        display: flex;
+        justify-content: space-between;
+        img {
+          width: 55px;
+        }
+      }
+    }
+  }
+}
+
+.news {
+  h2 {
+    padding: 8px;
+    position: relative;
+    span {
+      position: absolute;
+      right: 8px;
+    }
+  }
+  .adm-list {
+    .adm-list-item {
+      .adm-list-item-content {
+        .adm-list-item-content-main {
+          .info {
+            color: #8d8c8c;
+            display: flex;
+            justify-content: space-between;
+          }
+        }
+      }
+      
+    }
+  }
+}

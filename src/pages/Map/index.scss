@@ -1,0 +1,10 @@
+.mymap {
+    height: 100%;
+    padding-top: 45px; // 避免全局滚动条
+    #container {
+        height: 100%;
+    }
+    .adm-nav-bar {
+        margin-top: -45px; // 避免全局滚动条
+    }
+}
