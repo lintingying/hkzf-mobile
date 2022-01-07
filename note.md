@@ -1,5 +1,5 @@
 克隆仓库
-git clone git://github.com/lintingying/hkzf-mobile.git
+git clone git@github.com:lintingying/hkzf-mobile.git
 
 重置全局npm源，修正为 淘宝的 NPM 镜像
 npm install -g cnpm --registry=https://registry.npm.taobao.org
