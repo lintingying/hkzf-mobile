@@ -1,4 +1,6 @@
 import axios from "axios";
+import { BASE_URL } from './url'
+
 /**
  * 获取当前城市
  */
@@ -11,7 +13,7 @@ export const getCurrentCity = () => {
             curCity.get(async r => {
                 try {
                     // 通过接口判断数据库中是否有当前城市的房源信息，如没有则返回 上海
-                    const res = await axios.get('http://localhost:8080/area/info',{
+                    const res = await axios.get(BASE_URL + '/area/info',{
                         params: { name: r.name }
                     });
                     localStorage.setItem('hkzf_city', JSON.stringify(res.data.body))

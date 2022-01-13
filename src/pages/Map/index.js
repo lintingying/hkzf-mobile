@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 // import {Map, Marker, NavigationControl, InfoWindow} from 'react-bmapgl';
 import NavHeader from '../../components/NavHeader';
-import axios from 'axios';
 import './index.scss';
 import styles from './index.module.css'
 import { Toast } from 'antd-mobile';
 import { Link } from 'react-router-dom';
 import HouseItem from '../../components/HouseItem';
+import { API } from '../../utils/api'
 
 const BMapGL = window.BMapGL;
 
@@ -50,7 +50,7 @@ export default class MyMap extends Component {
     async renderOverlays(id) {
         try {
             Toast.show({ icon: 'loading', content: '加载中…' });
-            const res = await axios.get('http://localhost:8080/area/map', { params: {id: id}});
+            const res = await API.get('/area/map', { params: {id: id}});
             Toast.clear();
             const {nextZoom,type} = this.getTypeAndZoom();
             // 创建覆盖物
@@ -170,7 +170,7 @@ export default class MyMap extends Component {
     async getHouseList(id) {
         try {
             Toast.show({ icon: 'loading', content: '加载中…' });
-            const res = await axios.get('http://localhost:8080/houses', { params: {cityId: id}});
+            const res = await API.get('/houses', { params: {cityId: id}});
             Toast.clear();
             this.setState({
             housesList: res.data.body.list,

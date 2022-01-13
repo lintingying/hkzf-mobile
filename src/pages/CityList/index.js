@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
-import { NavBar, Toast } from 'antd-mobile'
+import { Toast } from 'antd-mobile'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
 import {getCurrentCity} from '../../utils/city'
 import './index.scss'
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer';
 import List from 'react-virtualized/dist/commonjs/List';
 import NavHeader from '../../components/NavHeader'
+import { API } from '../../utils/api'
+
 // 有房源的城市
 const HOUSE_CITY = ['北京', '上海', '广州', '深圳']
 
@@ -70,12 +71,12 @@ export default class CityList extends Component {
     }
 
     async getCityList() {
-        const res = await axios.get('http://localhost:8080/area/city',{
+        const res = await API.get('/area/city',{
             params: {level: '1'}
           });
         let {cityList, cityIndex} = formatCityData(res.data.body);
 
-        const resHot = await axios.get('http://localhost:8080/area/hot');
+        const resHot = await API.get('/area/hot');
         cityList['hot'] = resHot.data.body;
         cityIndex.unshift('hot');
 

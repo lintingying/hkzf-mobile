@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Swiper, Grid,List,Image,Space,SearchBar } from 'antd-mobile'
 import { DownOutline,EnvironmentOutline } from 'antd-mobile-icons'
 import { Link } from 'react-router-dom'
-import axios from 'axios'
 // 导入导航菜单图片
 import Nav1 from '../../assets/images/nav-1.png'
 import Nav2 from '../../assets/images/nav-2.png'
@@ -10,7 +9,8 @@ import Nav3 from '../../assets/images/nav-3.png'
 import Nav4 from '../../assets/images/nav-4.png'
 import './index.scss'
 import { getCurrentCity } from '../../utils/city'
-
+import { BASE_URL } from '../../utils/url'
+import { API } from '../../utils/api'
 export default class Index extends Component {
   state = {
     curCityName: '上海', // 当前城市名
@@ -20,13 +20,13 @@ export default class Index extends Component {
   }
   //获取轮播图数据
   async getSwipers() {
-      const res  = await axios.get('http://localhost:8080/home/swiper');
+      const res  = await API.get('/home/swiper');
       this.setState({
         swipers: res.data.body
       });
   }
   async getGroups() {
-    const res = await axios.get('http://localhost:8080/home/groups',{
+    const res = await API.get('/home/groups',{
       params: {
         area: 'AREA%7C88cff55c-aaa4-e2e0'
       }
@@ -36,7 +36,7 @@ export default class Index extends Component {
     });
   }
   async getNews() {
-    const res = await axios.get('http://localhost:8080/home/news',{
+    const res = await API.get('/home/news',{
       params: {
         area: 'AREA%7C88cff55c-aaa4-e2e0'
       }
@@ -50,7 +50,7 @@ export default class Index extends Component {
   //   const curCity = new window.BMapGL.LocalCity();
   //   curCity.get(async r => {
   //     // 通过接口判断数据库中是否有当前城市的房源信息，如没有则返回 上海
-  //     const res = await axios.get('http://localhost:8080/area/info',{
+  //     const res = await API.get('/area/info',{
   //       params: {
   //         name: r.name
   //       }
@@ -71,7 +71,7 @@ export default class Index extends Component {
       return this.state.swipers.map(item => (
           <Swiper.Item key={item.id}>
             <div className="content">
-              <img src={'http://localhost:8080' + item.imgSrc} alt={item.alt}
+              <img src={BASE_URL + item.imgSrc} alt={item.alt}
               style={{ width: '100%', verticalAlign: 'top' }}/>
             </div>
           </Swiper.Item>
@@ -121,7 +121,7 @@ export default class Index extends Component {
             <h3>{item.title}</h3>
             <div>{item.desc}</div>
           </div>
-          <img src={'http://localhost:8080' + item.imgSrc} alt="" />
+          <img src={BASE_URL + item.imgSrc} alt="" />
         </div>
       </Grid.Item>
     ))
@@ -129,7 +129,7 @@ export default class Index extends Component {
   // 渲染最新资讯
   renderNews() {
     return this.state.news.map(item => (
-      <List.Item key={item.id} prefix={<Image src={'http://localhost:8080' + item.imgSrc} fit='cover' width={80} height={80}/>} >
+      <List.Item key={item.id} prefix={<Image src={BASE_URL + item.imgSrc} fit='cover' width={80} height={80}/>} >
         <div>{item.title}</div>
         <div className="info">
           <span>{item.from}</span>
