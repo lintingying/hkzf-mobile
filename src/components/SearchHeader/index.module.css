@@ -1,0 +1,36 @@
+.searchHeader {
+  padding: 24px;
+  width: 100%;
+  position: absolute;
+  top: 0px;
+  display: flex;
+}
+.searchHeader :global(.adm-search-bar) {
+  flex: 1;
+}
+.back {
+  display: flex;
+  align-items: center;
+  margin-right: 12px;
+  cursor: pointer;
+  color: #333;
+  font-size: 1.2rem; 
+}
+.city {
+  text-decoration: none; 
+  display: inline-block;
+  width: 60px;
+  height: 30px;
+  line-height: 30px;
+  color: #333;
+  background-color: #ffffff;
+  text-align: center;
+}
+.map {
+  display: inline-block;
+  padding-left: 12px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  font-size: 1.2rem;
+}

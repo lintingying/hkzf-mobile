@@ -1,39 +1,5 @@
 .swiper {
   position: relative;
-  .content {
-    // height: 212px;
-  }
-  .search {
-    width: 100%;
-    padding: 0 24px;
-    position: absolute;
-    top: 24px;
-    display: flex;
-    justify-content: space-between;
-    a {
-      text-decoration: none; 
-    }
-    .city {
-      display: inline-block;
-      width: 60px;
-      height: 30px;
-      line-height: 30px;
-      color: #333;
-      background-color: #ffffff;
-      text-align: center;
-    }
-    .adm-search-bar {
-      flex: 1;
-    }
-    .map {
-      display: inline-block;
-      padding-left: 12px;
-      height: 30px;
-      line-height: 30px;
-      text-align: center;
-      font-size: 1.2rem;
-    }
-  }
 } 
 
 .nav {

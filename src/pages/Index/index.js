@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import { Swiper, Grid,List,Image,Space,SearchBar } from 'antd-mobile'
-import { DownOutline,EnvironmentOutline } from 'antd-mobile-icons'
-import { Link } from 'react-router-dom'
+import { Swiper, Grid,List,Image,Space } from 'antd-mobile'
+import SearchHeader from '../../components/SearchHeader'
 // 导入导航菜单图片
 import Nav1 from '../../assets/images/nav-1.png'
 import Nav2 from '../../assets/images/nav-2.png'
@@ -70,10 +69,8 @@ export default class Index extends Component {
   renderSwipers() {
       return this.state.swipers.map(item => (
           <Swiper.Item key={item.id}>
-            <div className="content">
-              <img src={BASE_URL + item.imgSrc} alt={item.alt}
+            <img src={BASE_URL + item.imgSrc} alt={item.alt}
               style={{ width: '100%', verticalAlign: 'top' }}/>
-            </div>
           </Swiper.Item>
         ))
   }
@@ -153,14 +150,7 @@ export default class Index extends Component {
           <Swiper autoplay>
             {this.renderSwipers()}
           </Swiper>
-          <div className="search">
-            <Link className="city" to="/cityList">{this.state.curCityName} <DownOutline /></Link>
-            <SearchBar placeholder='请输入小区或地址' style={{
-            '--border-radius': '0px',
-            '--background': '#ffffff',
-            }} />
-            <Link className="map" to="/map"><EnvironmentOutline /></Link>
-          </div>
+          <SearchHeader cityName={this.state.curCityName}></SearchHeader>
         </div>
 
         <Grid columns={4} gap={8} className="nav">
