@@ -1,0 +1,17 @@
+.filter {
+    display: flex;
+}
+.filter :global(.adm-dropdown) {
+    width:75%
+}
+.more {
+    
+    width: 25%;
+    background-color: #fff;
+    text-align: center;
+    height: 41px;
+    line-height: 41px;
+}
+.icon {
+    font-size: 8px;
+}

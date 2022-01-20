@@ -1,3 +1,4 @@
 .search {
-    padding: 12px !important;
+    padding: 8px 0 6px 0 !important;
+    position: static !important;
 }
