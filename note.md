@@ -25,3 +25,9 @@ yarn add prop-types 添加组件校验
 组件样式覆盖
 创建名为 [name].module.css 的样式文件（react脚手架中的约定，react会处理为css module)
 推荐单个类名，不要嵌套，使用驼峰命名
+
+render props 和 高阶组件  是为了在组件之间重用一些状态逻辑，但比较难使用，所以：
+Hook 使你在无需修改组件结构的情况下复用状态逻辑
+Hook 使你在非 class 的情况下可以使用更多的 React 特性 
+Hook 将组件中相互关联的部分拆分成更小的函数
+https://zh-hans.reactjs.org/docs/hooks-intro.html

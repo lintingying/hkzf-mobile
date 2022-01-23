@@ -19,7 +19,7 @@ export default function SearchHeader({ showBack, cityName, className }) {
 }
 
 SearchHeader.propTypes = {
-    showBack: PropTypes.bool = false,
+    showBack: PropTypes.bool,
     cityName: PropTypes.string.isRequired,
     className: PropTypes.string
 }

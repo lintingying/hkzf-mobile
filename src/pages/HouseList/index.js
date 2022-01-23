@@ -22,7 +22,7 @@ export default class HouseList extends Component {
     }
     render() {
         return (
-            <div className="houselist">
+            <div className={styles.houselist}>
                 <SearchHeader showBack={true} cityName={this.state.curCityName} className={styles.search}></SearchHeader>
                 <Filter getData={this.getData}></Filter>
             </div>
