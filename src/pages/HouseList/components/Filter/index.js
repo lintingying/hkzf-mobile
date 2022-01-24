@@ -1,5 +1,5 @@
 import React, { Component, useRef, useState } from 'react'
-import { Dropdown, Popup, Button, PickerView, CascadePickerView, Selector } from 'antd-mobile'
+import { Dropdown, Grid, Popup, Button, PickerView, CascadePickerView, Selector } from 'antd-mobile'
 import { DownFill } from 'antd-mobile-icons'
 import styles from './index.module.css';
 import { API } from '../../../../utils/api'
@@ -68,23 +68,37 @@ export default class Filter extends Component {
             floor: [],
             characteristic: [],
             area: [],
-            subway: [],
             rentType: [],
             price: []
         }
     }
-    moreData
     setVisible = (v) => {
         this.setState({ visible: v });
     }
     // 筛选-确定按钮
     moreConfirm = () => {
         this.setVisible(false)
-        this.getData(this.moreData)
+        // 子组件Filter传值给父组件
+        this.props.getData(this.state.selectData)
+    }
+    // 筛选-清除按钮
+    moreCancel = () => {
+        const data = {
+            roomType: [],
+            floor: [],
+            oriented: [],
+            characteristic: []
+        }
+        this.setData(data)
     }
     // 筛选
-    setMoreData(data) {
-        this.moreData = { ...this.moreData, ...data }
+    setData(data) {
+        this.setState({
+            selectData: {
+                ...this.state.selectData,
+                ...data
+            }
+        })
     }
     getData = (selectData) => {
         this.setState({
@@ -126,34 +140,48 @@ export default class Filter extends Component {
                     <Selector
                         className={styles.option}
                         options={this.state.filtersData.roomType}
+                        value={this.state.selectData.roomType}
                         multiple={true}
-                        onChange={(arr) => this.setMoreData({ roomType: arr })}
+                        onChange={(arr) => this.setData({ roomType: arr })}
                     />
                     <h3 className={styles.title}>朝向</h3>
                     <Selector
                         className={styles.option}
                         options={this.state.filtersData.oriented}
+                        value={this.state.selectData.oriented}
                         multiple={true}
-                        onChange={(arr) => this.setMoreData({ oriented: arr })}
+                        onChange={(arr) => this.setData({ oriented: arr })}
                     />
-
                     <h3 className={styles.title}>楼层</h3>
                     <Selector
                         className={styles.option}
                         options={this.state.filtersData.floor}
+                        value={this.state.selectData.floor}
                         multiple={true}
-                        onChange={(arr) => this.setMoreData({ floor: arr })}
+                        onChange={(arr) => this.setData({ floor: arr })}
                     />
                     <h3 className={styles.title}>房屋亮点</h3>
                     <Selector
                         className={styles.option}
                         options={this.state.filtersData.characteristic}
+                        value={this.state.selectData.characteristic}
                         multiple={true}
-                        onChange={(arr) => this.setMoreData({ characteristic: arr })}
+                        onChange={(arr) => this.setData({ characteristic: arr })}
                     />
-                    <Button className={styles.moreBtn} color='primary' block onClick={() => { this.moreConfirm() }}>
-                        确定
-                    </Button>
+                    <div className={styles.moreBtn}>
+                        <Grid columns={3} gap={0}>
+                            <Grid.Item>
+                                <Button block shape='rectangular' onClick={() => { this.moreCancel() }}>
+                                    清除
+                                </Button>
+                            </Grid.Item>
+                            <Grid.Item span={2}>
+                                <Button color='primary' block shape='rectangular' onClick={() => { this.moreConfirm() }}>
+                                    确定
+                                </Button>
+                            </Grid.Item>
+                        </Grid>
+                    </div>
                 </Popup>
             </div>
         )
