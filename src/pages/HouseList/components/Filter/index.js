@@ -11,7 +11,7 @@ const Drop = ({ filtersData, getData }) => {
     const [price, setPrice] = useState([]);
 
     return (
-        <Dropdown ref={ref}>
+        <Dropdown closeOnClickAway ref={ref}>
             <Dropdown.Item key='area' title='区域'>
                 <CascadePickerView value={area} options={[filtersData.area, filtersData.subway]} onChange={val => setArea(val)} />
                 <Button color='primary' block

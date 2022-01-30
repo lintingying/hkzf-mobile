@@ -5,3 +5,13 @@
     padding: 8px 0 6px 0 !important;
     position: static !important;
 }
+.houseItems {
+    padding: 0 15px;
+    background-color: #fff;
+}
+.loading {
+    line-height: 120px;
+    text-align: center;
+    height: 110px;
+    background-color: #f6f5f6;
+  }

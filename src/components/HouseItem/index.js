@@ -4,9 +4,8 @@ import PropTypes from 'prop-types'
 import styles from './index.module.css'
 import { BASE_URL } from '../../utils/url'
 
-export default function HouseItem({data}) {
+export default function HouseItem({ data }) {
     const navigate = useNavigate()
-    console.log(data);
     const { houseImg, title, desc, tags, price, houseCode, style } = data;
     return (
         <div className={styles.house} onClick={() => navigate(`/detail/${houseCode}`)} style={style}>
@@ -26,8 +25,8 @@ export default function HouseItem({data}) {
                             </span>
                         )
                     })}
-                    </div>
-                    <div className={styles.price}>
+                </div>
+                <div className={styles.price}>
                     <span className={styles.priceNum}>{price}</span> 元/月
                 </div>
             </div>
