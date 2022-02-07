@@ -8,7 +8,7 @@ export default function HouseItem({ data }) {
     const navigate = useNavigate()
     const { houseImg, title, desc, tags, price, houseCode, style } = data;
     return (
-        <div className={styles.house} onClick={() => navigate(`/detail/${houseCode}`)} style={style}>
+        <div className={styles.house} onClick={() => navigate(`/home/detail/${houseCode}`)} style={style}>
             <div className={styles.imgWrap}>
                 <img className={styles.img} src={BASE_URL + houseImg} alt="" />
             </div>

@@ -9,10 +9,8 @@ import User from './pages/User'
 import CityList from './pages/CityList'
 import MyMap from './pages/Map'
 import Login from './pages/Login'
-// 只要导入了组件，不管组件有没有显示在页面中，组建的样式就生效--引起样式覆盖
-// 1 起不同的类名
-// 2 css in js：用js编写css  cssModules styled-components等
-// 推荐使用css modules----react脚手架已集成
+import HouseDetail from './pages/HouseDetail'
+
 /**
  * 根组件-配置路由信息
  */
@@ -26,6 +24,7 @@ function App() {
         { path: '', element: <Navigate to="index" /> },
         { path: 'index', element: <Index /> },
         { path: 'list', element: <HouseList /> },
+        { path: 'detail/:id', element: <HouseDetail /> },
         { path: 'news', element: <News /> },
         { path: 'user', element: <User /> },
       ]

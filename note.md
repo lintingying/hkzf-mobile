@@ -22,6 +22,12 @@ yarn config set sass_binary_site http://cdn.npm.taobao.org/dist/node-sass -g
 
 yarn add prop-types 添加组件校验
 
+
+只要导入了组件，不管组件有没有显示在页面中，组建的样式就生效--引起样式覆盖
+1 起不同的类名
+2 css in js：用js编写css  cssModules styled-components等
+推荐使用css modules----react脚手架已集成
+
 组件样式覆盖
 创建名为 [name].module.css 的样式文件（react脚手架中的约定，react会处理为css module)
 推荐单个类名，不要嵌套，使用驼峰命名

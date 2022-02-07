@@ -7,10 +7,10 @@ import './index.module.css'
 /**
  * navigate(-1) 返回上一页
  */
-export default function NavHeader({children}) {
+export default function NavHeader({ children, right, className }) {
     const navigate = useNavigate()
     return (
-        <NavBar onBack={() => navigate(-1)}>{children}</NavBar>
+        <NavBar className={className} right={right} onBack={() => navigate(-1)}>{children}</NavBar>
     )
 }
 NavHeader.propTypes = {
