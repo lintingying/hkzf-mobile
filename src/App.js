@@ -24,11 +24,11 @@ function App() {
         { path: '', element: <Navigate to="index" /> },
         { path: 'index', element: <Index /> },
         { path: 'list', element: <HouseList /> },
-        { path: 'detail/:id', element: <HouseDetail /> },
         { path: 'news', element: <News /> },
         { path: 'user', element: <User /> },
       ]
     },
+    { path: 'detail/:id', element: <HouseDetail /> },
     { path: 'cityList', element: <CityList /> },
     { path: 'map', element: <MyMap /> },
     { path: 'login', element: <Login /> },

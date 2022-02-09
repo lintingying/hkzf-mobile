@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 
-import { Swiper, Modal, Toast } from 'antd-mobile'
-
+import { Grid, Swiper, Modal, Toast, Selector, Empty } from 'antd-mobile'
 import NavHeader from '../../components/NavHeader'
 import HouseItem from '../../components/HouseItem'
 
@@ -9,12 +8,14 @@ import { BASE_URL } from '../../utils/url'
 import { API } from '../../utils/api'
 
 import styles from './index.module.css'
+import { useParams } from 'react-router-dom'
+import { SendOutline } from 'antd-mobile-icons'
 
 // 猜你喜欢
 const recommendHouses = [
   {
     id: 1,
-    src: BASE_URL + '/img/message/1.png',
+    houseImg: '/img/message/1.png',
     desc: '72.32㎡/南 北/低楼层',
     title: '安贞西里 3室1厅',
     price: 4500,
@@ -22,7 +23,7 @@ const recommendHouses = [
   },
   {
     id: 2,
-    src: BASE_URL + '/img/message/2.png',
+    houseImg: '/img/message/2.png',
     desc: '83㎡/南/高楼层',
     title: '天居园 2室1厅',
     price: 7200,
@@ -30,7 +31,7 @@ const recommendHouses = [
   },
   {
     id: 3,
-    src: BASE_URL + '/img/message/3.png',
+    houseImg: '/img/message/3.png',
     desc: '52㎡/西南/低楼层',
     title: '角门甲4号院 1室1厅',
     price: 4300,
@@ -39,7 +40,7 @@ const recommendHouses = [
 ]
 
 // 百度地图
-const BMap = window.BMap
+const BMapGL = window.BMapGL;
 
 const labelStyle = {
   position: 'absolute',
@@ -58,7 +59,12 @@ const labelStyle = {
 
 const alert = Modal.alert
 
-export default class HouseDetail extends Component {
+export default function HouseDetail() {
+  // 获取配置好的路由参数：
+  let params = useParams();
+  return <Detail params={params}></Detail>
+}
+class Detail extends Component {
   state = {
     // 数据加载中状态
     isLoading: false,
@@ -101,10 +107,6 @@ export default class HouseDetail extends Component {
   }
 
   componentDidMount() {
-    // 获取配置好的路由参数：
-    // console.log('路由参数对象：', this.props.match.params)
-    // console.log(this.props)
-
     // 获取房屋数据
     this.getHouseDetail()
 
@@ -122,7 +124,7 @@ export default class HouseDetail extends Component {
     // }
 
     // 已登录
-    const { id } = this.props.match.params
+    const { id } = this.props.params
     const res = await API.get(`/user/favorites/${id}`)
 
     const { status, body } = res.data
@@ -212,7 +214,7 @@ export default class HouseDetail extends Component {
 
   // 获取房屋详细信息
   async getHouseDetail() {
-    const { id } = this.props.match.params
+    const { id } = this.props.params
 
     // 开启loading
     this.setState({
@@ -221,7 +223,7 @@ export default class HouseDetail extends Component {
 
     const res = await API.get(`/houses/${id}`)
 
-    // console.log(res.data.body)
+    console.log(res.data.body)
 
     this.setState({
       houseInfo: res.data.body,
@@ -236,14 +238,12 @@ export default class HouseDetail extends Component {
 
   // 渲染轮播图结构
   renderSwipers() {
-    const {
-      houseInfo: { houseImg }
-    } = this.state
+    const { houseInfo: { houseImg } } = this.state
 
     return houseImg.map(item => (
-      <a key={item} href="http://itcast.cn">
+      <Swiper.Item key={item}>
         <img src={BASE_URL + item} alt="" />
-      </a>
+      </Swiper.Item>
     ))
   }
 
@@ -251,13 +251,13 @@ export default class HouseDetail extends Component {
   renderMap(community, coord) {
     const { latitude, longitude } = coord
 
-    const map = new BMap.Map('map')
-    const point = new BMap.Point(longitude, latitude)
+    const map = new BMapGL.Map('map')
+    const point = new BMapGL.Point(longitude, latitude)
     map.centerAndZoom(point, 17)
 
-    const label = new BMap.Label('', {
+    const label = new BMapGL.Label('', {
       position: point,
-      offset: new BMap.Size(0, -36)
+      offset: new BMapGL.Size(0, -36)
     })
 
     label.setStyle(labelStyle)
@@ -310,50 +310,42 @@ export default class HouseDetail extends Component {
     return (
       <div className={styles.root}>
         {/* 导航栏 */}
-        <NavHeader className={styles.navHeader}
-          right={<i key="share" className="iconfont icon-share" />}
-        >
-          {community}rerw
+        <NavHeader className={styles.navHeader} right={<SendOutline />}>
+          {community}
         </NavHeader>
 
         {/* 轮播图 */}
         <div className={styles.slides}>
-          {!isLoading ? (
-            <Swiper autoplay>
-              {this.renderSwipers()}
-            </Swiper>
-          ) : (
-            ''
-          )}
+          {!isLoading ? (<Swiper autoplay>{this.renderSwipers()}</Swiper>) : ('')}
         </div>
 
         {/* 房屋基础信息 */}
-        {/* <div className={styles.info}>
+        <div className={styles.info}>
           <h3 className={styles.infoTitle}>{title}</h3>
-          <Flex className={styles.tags}>
-            <Flex.Item>{this.renderTags()}</Flex.Item>
-          </Flex>
+          <div className={styles.tags}>
+            {this.renderTags()}
+          </div>
 
-          <Flex className={styles.infoPrice}>
-            <Flex.Item className={styles.infoPriceItem}>
+          <Grid columns={3} gap={8} className={styles.infoPrice}>
+            <Grid.Item className={styles.infoPriceItem}>
               <div>
                 {price}
                 <span className={styles.month}>/月</span>
               </div>
               <div>租金</div>
-            </Flex.Item>
-            <Flex.Item className={styles.infoPriceItem}>
+            </Grid.Item>
+            <Grid.Item className={styles.infoPriceItem}>
               <div>{roomType}</div>
               <div>房型</div>
-            </Flex.Item>
-            <Flex.Item className={styles.infoPriceItem}>
+            </Grid.Item>
+            <Grid.Item className={styles.infoPriceItem}>
               <div>{size}平米</div>
               <div>面积</div>
-            </Flex.Item>
-          </Flex>
+            </Grid.Item>
+          </Grid>
 
-          <Flex className={styles.infoBasic} align="start">
-            <Flex.Item>
+          <Grid columns={2} gap={8} className={styles.infoBasic}>
+            <Grid.Item>
               <div>
                 <span className={styles.title}>装修：</span>
                 精装
@@ -362,8 +354,8 @@ export default class HouseDetail extends Component {
                 <span className={styles.title}>楼层：</span>
                 {floor}
               </div>
-            </Flex.Item>
-            <Flex.Item>
+            </Grid.Item>
+            <Grid.Item>
               <div>
                 <span className={styles.title}>朝向：</span>
                 {oriented.join('、')}
@@ -371,9 +363,9 @@ export default class HouseDetail extends Component {
               <div>
                 <span className={styles.title}>类型：</span>普通住宅
               </div>
-            </Flex.Item>
-          </Flex>
-        </div> */}
+            </Grid.Item>
+          </Grid>
+        </div>
 
         {/* 地图位置 */}
         <div className={styles.map}>
@@ -389,14 +381,9 @@ export default class HouseDetail extends Component {
         {/* 房屋配套 */}
         <div className={styles.about}>
           <div className={styles.houseTitle}>房屋配套</div>
-          {/* <HousePackage list={supporting} /> */}
-          {/* <div className="title-empty">暂无数据</div> */}
-
-          {/* {supporting.length === 0 ? (
-            <div className={styles.titleEmpty}>暂无数据</div>
-          ) : (
-            <HousePackage list={supporting} />
-          )} */}
+          {supporting.length === 0 ? (<Empty />) : (
+            <Selector options={supporting.map((e, i) => { return { label: e, value: i } })} />
+          )}
         </div>
 
         {/* 房屋概况 */}
@@ -434,8 +421,8 @@ export default class HouseDetail extends Component {
         </div>
 
         {/* 底部收藏按钮 */}
-        {/* <Flex className={styles.fixedBottom}>
-          <Flex.Item onClick={this.handleFavorite}>
+        <Grid columns={3} gap={8} className={styles.fixedBottom}>
+          <Grid.Item onClick={this.handleFavorite}>
             <img
               src={
                 BASE_URL + (isFavorite ? '/img/star.png' : '/img/unstar.png')
@@ -446,14 +433,14 @@ export default class HouseDetail extends Component {
             <span className={styles.favorite}>
               {isFavorite ? '已收藏' : '收藏'}
             </span>
-          </Flex.Item>
-          <Flex.Item>在线咨询</Flex.Item>
-          <Flex.Item>
+          </Grid.Item>
+          <Grid.Item>在线咨询</Grid.Item>
+          <Grid.Item>
             <a href="tel:400-618-4000" className={styles.telephone}>
               电话预约
             </a>
-          </Flex.Item>
-        </Flex> */}
+          </Grid.Item>
+        </Grid>
       </div>
     )
   }

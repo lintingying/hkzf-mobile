@@ -1,6 +1,5 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import PropTypes from 'prop-types'
 import styles from './index.module.css'
 import { BASE_URL } from '../../utils/url'
 
@@ -8,7 +7,7 @@ export default function HouseItem({ data }) {
     const navigate = useNavigate()
     const { houseImg, title, desc, tags, price, houseCode, style } = data;
     return (
-        <div className={styles.house} onClick={() => navigate(`/home/detail/${houseCode}`)} style={style}>
+        <div className={styles.house} onClick={() => navigate(`/detail/${houseCode}`)} style={style}>
             <div className={styles.imgWrap}>
                 <img className={styles.img} src={BASE_URL + houseImg} alt="" />
             </div>
@@ -32,12 +31,4 @@ export default function HouseItem({ data }) {
             </div>
         </div>
     )
-}
-HouseItem.propTypes = {
-    src: PropTypes.string,
-    title: PropTypes.string,
-    desc: PropTypes.string,
-    tags: PropTypes.array.isRequired,
-    price: PropTypes.number,
-    onClick: PropTypes.func
 }
