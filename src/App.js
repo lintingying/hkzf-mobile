@@ -10,6 +10,7 @@ import CityList from './pages/CityList'
 import MyMap from './pages/Map'
 import Login from './pages/Login'
 import HouseDetail from './pages/HouseDetail'
+import Register from './pages/register'
 
 /**
  * 根组件-配置路由信息
@@ -32,6 +33,7 @@ function App() {
     { path: 'cityList', element: <CityList /> },
     { path: 'map', element: <MyMap /> },
     { path: 'login', element: <Login /> },
+    { path: 'register', element: <Register /> },
     // { path: '*', element: <NotFound />}
   ]);
   return routes;

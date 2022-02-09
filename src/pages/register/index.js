@@ -7,7 +7,7 @@ import { Form, Input, Button, Toast } from 'antd-mobile'
 import { Link } from 'react-router-dom'
 import { API } from '../../utils/api';
 
-export default function Login() {
+export default function Register() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate()
@@ -16,7 +16,7 @@ export default function Login() {
      */
     const onFinish = async () => {
         // 发送请求
-        const res = await API.post('/user/login', {
+        const res = await API.post('/user/registered', {
             username,
             password
         })
@@ -24,11 +24,11 @@ export default function Login() {
         const { status, body, description } = res.data
 
         if (status === 200) {
-            // 登录成功
-            localStorage.setItem('hkzf_token', body.token)
-            navigate(-1)
+            // 注册成功
+            localStorage.setItem('hkzf_token', body.toke) // 后端接口返回的数据 token写错
+            navigate('/home')
         } else {
-            // 登录失败
+            // 注册失败
             Toast.show({
                 icon: 'fail',
                 content: description,
@@ -37,11 +37,11 @@ export default function Login() {
     }
 
     return (
-        <div className={styles.login}>
-            <NavHeader>登录</NavHeader>
+        <div className={styles.register}>
+            <NavHeader>注册</NavHeader>
             <Form onFinish={onFinish} footer={
                 <Button block type='submit' color='primary' size='large'>
-                    登录
+                    注册
                 </Button>
             }>
                 <Form.Item name='用户名' label='用户名' rules={[{ required: true, message: '不能为空' }]}>
@@ -52,7 +52,8 @@ export default function Login() {
                 </Form.Item>
             </Form>
             <div className={styles.backHome}>
-                <Link to='/register'>还没有账号？去注册</Link>
+                <div><Link to="/home">点我回首页</Link></div>
+                <div><Link to="/login">已有账号，去登录</Link></div>
             </div>
         </div>
     )
