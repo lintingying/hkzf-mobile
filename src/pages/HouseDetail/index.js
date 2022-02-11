@@ -8,8 +8,9 @@ import { BASE_URL } from '../../utils/url'
 import { API } from '../../utils/api'
 
 import styles from './index.module.css'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { SendOutline } from 'antd-mobile-icons'
+import { isAuth } from '../../utils/auth'
 
 // 猜你喜欢
 const recommendHouses = [
@@ -57,12 +58,11 @@ const labelStyle = {
   userSelect: 'none'
 }
 
-const alert = Modal.alert
-
 export default function HouseDetail() {
   // 获取配置好的路由参数：
   let params = useParams();
-  return <Detail params={params}></Detail>
+  const navigate = useNavigate()
+  return <Detail params={params} navigate={navigate}></Detail>
 }
 class Detail extends Component {
   state = {
@@ -116,12 +116,12 @@ class Detail extends Component {
 
   // 检查房源是否收藏：
   async checkFavorite() {
-    // const isLogin = isAuth()
+    const isLogin = isAuth()
 
-    //if (!isLogin) {
-    // 没有登录
-    //  return
-    // }
+    if (!isLogin) {
+      // 没有登录
+      return
+    }
 
     // 已登录
     const { id } = this.props.params
@@ -148,37 +148,24 @@ class Detail extends Component {
     6 根据 isFavorite 判断，当前房源是否收藏。
     7 如果未收藏，就调用添加收藏接口，添加收藏。
     8 如果已收藏，就调用删除收藏接口，去除收藏。
-
-    alert('提示', '登录后才能收藏房源，是否去登录?', [
-      { text: '取消' },
-      {
-        text: '去登录',
-        onPress: () => {}
-      }
-    ])
   */
 
   handleFavorite = async () => {
-    const isLogin = true
-    const { history, location, match } = this.props
+    const isLogin = isAuth()
 
     if (!isLogin) {
       // 未登录
-      return alert('提示', '登录后才能收藏房源，是否去登录?', [
-        { text: '取消' },
-        {
-          text: '去登录',
-          // 使用 replace 方法，解决登录后返回详情页面，再点击左上角返回按钮时
-          // 需要点击两次的问题
-          // onPress: () => history.push('/login', { from: location })
-          onPress: () => history.replace('/login', { from: location })
-        }
-      ])
+      return Modal.confirm({
+        content: '登录后才能收藏房源，是否去登录?',
+        onConfirm: async () => {
+          this.props.navigate('/login')
+        },
+      })
     }
 
     // 已登录
     const { isFavorite } = this.state
-    const { id } = match.params
+    const { id } = this.props.params
 
     if (isFavorite) {
       // 已收藏，应该删除收藏
@@ -190,10 +177,10 @@ class Detail extends Component {
 
       if (res.data.status === 200) {
         // 提示用户取消收藏
-        Toast.info('已取消收藏', 1, null, false)
+        Toast.show({ content: '已取消收藏' });
       } else {
         // token 超时
-        Toast.info('登录超时，请重新登录', 2, null, false)
+        Toast.show({ content: '登录超时，请重新登录' });
       }
     } else {
       // 未收藏，应该添加收藏
@@ -201,13 +188,13 @@ class Detail extends Component {
       // console.log(res)
       if (res.data.status === 200) {
         // 提示用户收藏成功
-        Toast.info('已收藏', 1, null, false)
+        Toast.show({ content: '已收藏' });
         this.setState({
           isFavorite: true
         })
       } else {
         // token 超时
-        Toast.info('登录超时，请重新登录', 2, null, false)
+        Toast.show({ content: '登录超时，请重新登录' });
       }
     }
   }
@@ -223,7 +210,7 @@ class Detail extends Component {
 
     const res = await API.get(`/houses/${id}`)
 
-    console.log(res.data.body)
+    // console.log(res.data.body)
 
     this.setState({
       houseInfo: res.data.body,
@@ -424,9 +411,7 @@ class Detail extends Component {
         <Grid columns={3} gap={8} className={styles.fixedBottom}>
           <Grid.Item onClick={this.handleFavorite}>
             <img
-              src={
-                BASE_URL + (isFavorite ? '/img/star.png' : '/img/unstar.png')
-              }
+              src={BASE_URL + (isFavorite ? '/img/star.png' : '/img/unstar.png')}
               className={styles.favoriteImg}
               alt="收藏"
             />
