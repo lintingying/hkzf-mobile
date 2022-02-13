@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
@@ -17,7 +17,9 @@ import './assets/fonts/iconfont.css'
 ReactDOM.render(
   <React.StrictMode>
     <Router>
-      <App />
+      <Suspense fallback={<div className="route-loading">loading...</div>}>
+        <App />
+      </Suspense>
     </Router>
   </React.StrictMode>,
   document.getElementById('root')

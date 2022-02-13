@@ -37,3 +37,13 @@ Hook 使你在无需修改组件结构的情况下复用状态逻辑
 Hook 使你在非 class 的情况下可以使用更多的 React 特性 
 Hook 将组件中相互关联的部分拆分成更小的函数
 https://zh-hans.reactjs.org/docs/hooks-intro.html
+
+项目打包 https://create-react-app.dev/docs/deployment
+npm install -g serve
+serve -s build
+
+React.lazy 函数能让你像渲染常规组件一样处理动态引入（的组件）
+import('组件路径')作用：告诉webpack，这是一个代码分割点，进行代码分割
+Suspense 组件中渲染 lazy 组件，如此使得我们可以使用在等待加载 lazy 组件时做优降级（如 loading 指示器等）
+可以将 Suspense 组件置于懒加载组件之上的任何位置。
+你甚至可以用一个 Suspense 组件包裹多个懒加载组件。
