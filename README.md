@@ -1,5 +1,8 @@
 # react前端学习项目，使用react17 react-router-dom V6
 
+长列表优化：博客：https://www.cnblogs.com/tingying/p/15848419.html
+
+
 
 # Getting Started with Create React App
 
